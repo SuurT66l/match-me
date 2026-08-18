@@ -1,0 +1,101 @@
+#Retrieve data
+type Query {
+    user(id: ID!): User,
+    bio(id: ID!): Bio,
+    profile(id: ID!): Profile,
+    me: User,
+    myBio: Bio,
+    myProfile: Profile,
+    recommendations: [User],
+    connections: [User], 
+    incomingConnections: [User],
+    outgoingConnections: [User]
+}
+
+type Mutation {
+    updateAccount(input: UpdateAccount!): User,
+    updateBio(input: UpdateBio!): Bio,
+    updateProfile(aboutMe: String!): Profile
+
+    sendConnectionRequest(userId: ID!): Boolean
+    acceptConnection(userId: ID!): Boolean
+    rejectConnection(userId: ID!): Boolean
+    blockUser(userId: ID!): Boolean
+    removeConnection(userId: ID!): Boolean
+
+    setOnline: Boolean!,
+    setOffline: Boolean!
+}
+
+type Subscription {
+  onlineStatus: OnlineStatus
+}
+
+type OnlineStatus {
+    id: ID!,
+    isOnline: Boolean!
+}
+
+input UpdateAccount {
+    nickname: String,
+    email: String,
+    currentPassword: String,
+    newPassword: String
+}
+
+input UpdateBio {
+    dateOfBirth: String,
+    gender: String,
+    country: String,
+    city: String,
+    latitude: Float,
+    longitude: Float,
+    timeRange: String,
+    timeZone: String,
+    gamePreference: String,
+    gameGenrePreference: String,
+    lookingFor: String,
+    platforms: String,
+    intensity: String,
+    preferredGenders: String,
+    preferredAgeMin: Int,
+    preferredAgeMax: Int,
+    maxDistanceKm: Int,
+}
+
+type User {
+    id: ID!,
+    nickname: String,
+    profilePicture: String,
+    email: String,
+    bio: Bio,
+    profile: Profile
+}
+
+type Bio {
+    dateOfBirth: String,
+    gender: String,
+    country: String,
+    city: String,
+    preferences: Preferences,
+    user: User
+}
+
+type Profile {
+    aboutMe: String,
+    user: User
+}
+
+type Preferences {
+    timeRange: String,
+    timeZone: String,
+    gamePreference: String,
+    gameGenrePreference: String,
+    lookingFor: String,
+    platforms: String,
+    intensity: String,
+    preferredGenders: String,
+    preferredAgeMin: Int,
+    preferredAgeMax: Int,
+    maxDistanceKm: Int,
+}
